@@ -5,66 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Defensa Comunal Oreamunense</title>
   <link rel="icon" href="logo.jpg" type="image/jpeg">
+
   <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #F5F5F5;
       color: #333;
       margin: 0;
       padding: 0;
+      line-height: 1.6;
     }
+
     header {
       background-color: #0D2B55;
       color: white;
-      padding: 20px;
+      padding: 20px 10px;
       text-align: center;
     }
     header img {
-      max-width: 100px;
+      max-width: 120px;
+      height: auto;
+      vertical-align: middle;
     }
+    header .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    header p {
+      margin: 5px 0 0;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    /* Navegación */
     nav {
       background-color: #0D2B55;
+      position: relative;
+    }
+    nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      padding: 10px 0;
+      flex-wrap: wrap;
+    }
+    nav li {
+      margin: 0 15px;
     }
     nav a {
       color: white;
-      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      padding: 15px 0;
+      display: block;
+      transition: color 0.3s ease;
     }
+    nav a:hover,
+    nav a:focus {
+      color: #FFD700; /* Color dorado al pasar mouse o enfocar */
+    }
+
+    /* Menú hamburguesa */
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    .menu-toggle div {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Sección general */
     section {
       padding: 40px 20px;
       max-width: 800px;
       margin: auto;
+      background: white;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(13, 43, 85, 0.1);
     }
     h2 {
       color: #0D2B55;
+      margin-bottom: 15px;
+      font-size: 1.6rem;
     }
+    p, a {
+      font-size: 1rem;
+      color: #333;
+    }
+    a {
+      color: #0D2B55;
+      text-decoration: underline;
+    }
+    a:hover,
+    a:focus {
+      color: #08306B;
+    }
+
     iframe {
       width: 100%;
       border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
+
     footer {
       background-color: #0D2B55;
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 20px 10px;
+      font-size: 0.9rem;
     }
 
-    /* Responsive design */
-    @media (max-width: 600px) {
-      header img {
-        max-width: 80px;
-      }
-      nav {
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
         flex-direction: column;
-        align-items: center;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        background-color: #0D2B55;
       }
-      nav a {
+      nav ul.active {
+        max-height: 500px; /* suficiente para mostrar todos los links */
+      }
+      nav li {
         margin: 10px 0;
+        text-align: center;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.4rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      section {
+        padding: 30px 15px;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+      footer {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -72,20 +183,27 @@
 <body>
 
   <header>
-    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <img src="logo.jpg" alt="Logo Defensa Comunal Oreamunense" style="max-width: 150px; height: auto;" />
+    <div class="header-content">
+      <img src="logo.jpg" alt="Logo Defensa Comunal Oreamunense" />
       <div style="text-align: left;">
-        <h1 style="margin: 0;">Defensa Comunal Oreamunense</h1>
-        <p style="margin: 5px 0 0;">¡Por una comunidad unida y justa!</p>
+        <h1>Defensa Comunal Oreamunense</h1>
+        <p>¡Por una comunidad unida y justa!</p>
       </div>
     </div>
   </header>
 
   <nav>
-    <a href="#nosotros">Quiénes somos</a>
-    <a href="#formulario">Únete</a>
-    <a href="#documentos">Documentos</a>
-    <a href="#calendario">Eventos</a>
+    <div class="menu-toggle" aria-label="Menú de navegación" aria-expanded="false" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <ul>
+      <li><a href="#nosotros">Quiénes somos</a></li>
+      <li><a href="#formulario">Únete</a></li>
+      <li><a href="#documentos">Documentos</a></li>
+      <li><a href="#calendario">Eventos</a></li>
+    </ul>
   </nav>
 
   <section id="nosotros">
@@ -95,23 +213,42 @@
 
   <section id="formulario">
     <h2>Únete al grupo</h2>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdhpdOMMa5iHnuVbu-JpgWf17ID4PGhrUucfvNf_leMLQ89uA/viewform?embedded=true" height="1000">Cargando formulario...</iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdhpdOMMa5iHnuVbu-JpgWf17ID4PGhrUucfvNf_leMLQ89uA/viewform?embedded=true" height="1000" title="Formulario de unión"></iframe>
   </section>
 
   <section id="documentos">
     <h2>Documentos públicos</h2>
-    <p><a href="https://drive.google.com/drive/folders/10sgCNgChUbli9E2H1WWfHS-9Nu7H_QkA?usp=sharing">Ver carpeta de documentos en Google Drive</a></p>
+    <p><a href="https://drive.google.com/drive/folders/10sgCNgChUbli9E2H1WWfHS-9Nu7H_QkA?usp=sharing" target="_blank" rel="noopener noreferrer">Ver carpeta de documentos en Google Drive</a></p>
   </section>
 
   <section id="calendario">
     <h2>Calendario de reuniones y eventos</h2>
-    <iframe src="https://calendar.google.com/calendar/embed?src=0cc84129c95510748fc2a0c374142ee3dddbf849dc65233a70078dea7fd5a116%40group.calendar.google.com&ctz=America%2FCosta_Rica" style="height:600px;"></iframe>
+    <iframe src="https://calendar.google.com/calendar/embed?src=0cc84129c95510748fc2a0c374142ee3dddbf849dc65233a70078dea7fd5a116%40group.calendar.google.com&ctz=America%2FCosta_Rica" style="height:600px;" title="Calendario de eventos"></iframe>
   </section>
 
   <footer>
     <p>Contacto: defensacomunaloreamunense@gmail.com</p>
     <p>&copy; 2025 Defensa Comunal Oreamunense</p>
   </footer>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navUl = document.querySelector('nav ul');
+
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      navUl.classList.toggle('active');
+    });
+
+    // Para accesibilidad con teclado
+    menuToggle.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menuToggle.click();
+      }
+    });
+  </script>
 
 </body>
 </html>
